@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(schema = "users")
+@Table(name = "users")
 public class UserEntity {
 
     @Id
@@ -25,7 +25,7 @@ public class UserEntity {
     @NotBlank
     @Size(message = "First Name is required", min = 2, max = 30)
     @Pattern(regexp = "^[A-Za-z]+$", message = "First name must only contain letters.")
-    private String firstNAme;
+    private String firstName;
 
     @NotBlank
     @Size(message = "Last Name is required", min = 2, max = 30)
