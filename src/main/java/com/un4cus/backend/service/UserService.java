@@ -40,10 +40,10 @@ public class UserService {
     }
     
 
-//    public void softDeleteUser(Long id) {
-//        UserEntity user = this.getUserById(id);
-//        user.setStatus(UserEntity.Status.INACTIVE);
-//        userRepository.save(user);
-//    }
+    public void softDeleteUser(Long id) {
+        UserEntity user = this.getUserById(id);
+        user.setStatus(UserEntity.Status.INACTIVE);
+        userRepository.save(user);
+    }
 
 }
