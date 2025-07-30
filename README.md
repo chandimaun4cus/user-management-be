@@ -36,16 +36,29 @@ cd user-management-be
 
 ### 2. Configure MySQL Database
 
-Ensure MySQL is running and update src/main/resources/application.properties:
+1. Create .env file in your root directory
+2. Add the following configurations with your details:
+- DB_URL=jdbc:mysql://localhost:3306/<YOUR_DB_NAME>?createDatabaseIfNotExist=true
+- DB_USERNAME=<YOUR_MYSQL_USERNAME>
+- DB_PASSWORD=<YOUR_MYSQL_PASSWORD>
 
-```
-- spring.datasource.url=jdbc:mysql://localhost:3306/Your_DB_Name?createDatabaseIfNotExist=true
-- spring.datasource.username=your_mysql_username
-- spring.datasource.password=your_mysql_password
-- spring.jpa.hibernate.ddl-auto=update
-```
 ### 3. Build and Run
 
+Open cmd/terminal and run the following commands with your Mysql details:
+```aiignore
+set DB_URL=jdbc:mysql://localhost:3306/<YOUR_DB_NAME>?createDatabaseIfNotExist=true
+set DB_USERNAME=<YOUR_MYSQL_USERNAME>
+set DB_PASSWORD=<YOUR_MYSQL_PASSWORD>
+```
+On Windows OS:
+```
+mvnw spring-boot:run
+```
+
+On Mac/Linux OS:
+```aiignore
+./mvnw spring-boot:run
+```
 ---
 
 ## API Endpoints
