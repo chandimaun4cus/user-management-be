@@ -2,10 +2,7 @@ package com.un4cus.backend.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -13,8 +10,7 @@ import java.time.LocalDateTime;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 @Table(name = "users")
 public class UserEntity {
 
@@ -57,6 +53,9 @@ public class UserEntity {
     private Status status;
 
     private LocalDateTime createdDate;
+
+    @Column(name = "User_Deleted_Status")
+    private boolean userDeletedStatus;
 
     @PrePersist
     protected void onCreate() {

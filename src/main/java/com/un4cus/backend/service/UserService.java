@@ -2,6 +2,7 @@ package com.un4cus.backend.service;
 
 import com.un4cus.backend.entity.UserEntity;
 import com.un4cus.backend.repository.UserRepository;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,32 +18,55 @@ public class UserService {
 
     // Create User
     public UserEntity createUser(@Valid UserEntity user) {
+
+        UserEntity existingUser = userRepository.findUserByEmail(user.getEmail());
+        if(existingUser != null){
+            throw new EntityExistsException("Email already exists: " + user.getEmail());
+        }
         return userRepository.save(user);
     }
 
     // Get All Users
     public List<UserEntity> getAllUsers() {
-        return userRepository.findAll();
+
+        return userRepository.findUsersNotDeleted();
+
     }
 
     // Get user by Id
     public UserEntity getUserById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found."));
 
     }
 
     // Update user
     public UserEntity updateUser(Long id, UserEntity updatedUser) {
+
+
         UserEntity existingUser = this.getUserById(id);
-        updatedUser.setId(existingUser.getId());
-        updatedUser.setCreatedDate(existingUser.getCreatedDate());
-        return userRepository.save(updatedUser);
+
+        if(existingUser == null){
+            throw new EntityNotFoundException("User not found.");
+        }
+
+        existingUser.setFirstName(updatedUser.getFirstName());
+        existingUser.setLastName(updatedUser.getLastName());
+        existingUser.setUsername(updatedUser.getUsername());
+        existingUser.setEmail(updatedUser.getEmail());
+        existingUser.setPassword(updatedUser.getPassword());
+        existingUser.setRole(updatedUser.getRole());
+        existingUser.setStatus(updatedUser.getStatus());
+        existingUser.setUserDeletedStatus(updatedUser.isUserDeletedStatus());
+
+        return userRepository.save(existingUser);
+
     }
 
     // Delete User
     public void softDeleteUser(Long id) {
         UserEntity user = this.getUserById(id);
         user.setStatus(UserEntity.Status.INACTIVE);
+        user.setUserDeletedStatus(true);
         userRepository.save(user);
     }
 
