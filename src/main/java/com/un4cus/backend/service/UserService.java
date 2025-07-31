@@ -46,10 +46,6 @@ public class UserService {
 
         UserEntity existingUser = this.getUserById(id);
 
-        if(existingUser == null){
-            throw new EntityNotFoundException("User not found.");
-        }
-
         existingUser.setFirstName(updatedUser.getFirstName());
         existingUser.setLastName(updatedUser.getLastName());
         existingUser.setRole(updatedUser.getRole());
