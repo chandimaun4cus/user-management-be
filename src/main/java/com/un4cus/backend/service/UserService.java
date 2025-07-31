@@ -1,5 +1,6 @@
 package com.un4cus.backend.service;
 
+import com.un4cus.backend.dto.UserDTO;
 import com.un4cus.backend.entity.UserEntity;
 import com.un4cus.backend.repository.UserRepository;
 import jakarta.persistence.EntityExistsException;
@@ -40,7 +41,7 @@ public class UserService {
     }
 
     // Update user
-    public UserEntity updateUser(Long id, UserEntity updatedUser) {
+    public UserEntity updateUser(Long id, UserDTO updatedUser) {
 
 
         UserEntity existingUser = this.getUserById(id);
@@ -51,9 +52,6 @@ public class UserService {
 
         existingUser.setFirstName(updatedUser.getFirstName());
         existingUser.setLastName(updatedUser.getLastName());
-        existingUser.setUsername(updatedUser.getUsername());
-        existingUser.setEmail(updatedUser.getEmail());
-        existingUser.setPassword(updatedUser.getPassword());
         existingUser.setRole(updatedUser.getRole());
         existingUser.setStatus(updatedUser.getStatus());
         existingUser.setUserDeletedStatus(updatedUser.isUserDeletedStatus());

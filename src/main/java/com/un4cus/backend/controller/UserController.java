@@ -1,5 +1,6 @@
 package com.un4cus.backend.controller;
 
+import com.un4cus.backend.dto.UserDTO;
 import com.un4cus.backend.entity.UserEntity;
 import com.un4cus.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +41,7 @@ public class UserController {
 
     // Update user
     @PutMapping("/user/{id}")
-    public ResponseEntity<UserEntity> updateUser(@PathVariable Long id, @Valid @RequestBody UserEntity user) {
+    public ResponseEntity<UserEntity> updateUser(@PathVariable Long id, @Valid @RequestBody UserDTO user) {
         return new ResponseEntity<> (userService.updateUser(id, user), HttpStatus.ACCEPTED);
     }
 
