@@ -65,12 +65,12 @@ public class UserController {
         }
 
     }
-//
-//    // Delete User
-//    @DeleteMapping("/user/{id}")
-//    public ResponseEntity<Void> softDeleteUser(@PathVariable Long id) {
-//        userService.softDeleteUser(id);
-//        return new ResponseEntity<> (HttpStatus.OK);
-//    }
+
+    // Delete User
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<Void> softDeleteUser(@PathVariable Long id) {
+        userService.softDeleteUser(id);
+        return new ResponseEntity<> (HttpStatus.OK);
+    }
 }
 

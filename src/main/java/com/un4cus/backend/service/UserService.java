@@ -4,6 +4,7 @@ import com.un4cus.backend.dto.UserRequestDTO;
 import com.un4cus.backend.dto.UserResponseDTO;
 import com.un4cus.backend.dto.UserUpdateDTO;
 import com.un4cus.backend.entity.UserEntity;
+import com.un4cus.backend.enums.Status;
 import com.un4cus.backend.repository.UserRepository;
 import com.un4cus.backend.transformers.UserDtoTransformer;
 import jakarta.persistence.EntityExistsException;
@@ -71,14 +72,13 @@ public class UserService {
         return userDtoTransformer.mapToResponseDTO(updateUser);
 
     }
-//
-//    // Delete User
-//    public void softDeleteUser(Long id) {
-//        UserResponseDTO user = this.getUserById(id);
-//        user.setStatus(UserResponseDTO.Status.INACTIVE);
-//        user.setUserDeletedStatus(true);
-//        userRepository.save(user);
-//    }
 
-
+    // Delete User
+    public void softDeleteUser(Long id) {
+        UserEntity existingUser =userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found."));
+        existingUser.setStatus(Status.INACTIVE);
+        existingUser.setUserDeletedStatus(true);
+        userRepository.save(existingUser);
+    }
+    
 }
