@@ -1,8 +1,10 @@
 package com.un4cus.backend.service;
 
-import com.un4cus.backend.dto.UserDTO;
+import com.un4cus.backend.dto.UserRequestDTO;
+import com.un4cus.backend.dto.UserResponseDTO;
 import com.un4cus.backend.entity.UserEntity;
 import com.un4cus.backend.repository.UserRepository;
+import com.un4cus.backend.transformers.UserDtoTransformer;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -17,51 +19,60 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final UserDtoTransformer userDtoTransformer;
+
+
     // Create User
-    public UserEntity createUser(@Valid UserEntity user) {
+    public UserResponseDTO createUser(@Valid UserRequestDTO userDto) {
 
-        UserEntity existingUser = userRepository.findUserByEmail(user.getEmail());
-        if(existingUser != null){
-            throw new EntityExistsException("Email already exists: " + user.getEmail());
+
+        if(userRepository.findUserByEmail(userDto.getEmail()) != null){
+            throw new EntityExistsException("Email already exists: " + userDto.getEmail());
         }
-        return userRepository.save(user);
+
+        UserEntity userEntity = userDtoTransformer.mapToEntity(userDto);
+        UserEntity savedUser = userRepository.save(userEntity);
+
+        return userDtoTransformer.mapToResponseDTO(savedUser);
     }
 
-    // Get All Users
-    public List<UserEntity> getAllUsers() {
+//    // Get All Users
+//    public List<UserResponseDTO> getAllUsers() {
+//
+//        return userRepository.findUsersNotDeleted();
+//
+//    }
+//
+//    // Get user by Id
+//    public UserResponseDTO getUserById(Long id) {
+//        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found."));
+//
+//    }
+//
+//    // Update user
+//    public UserRequestDTO updateUser(Long id, UserRequestDTO updatedUser) {
+//
+//
+//        UserResponseDTO existingUser = this.getUserById(id);
+//
+//
+//        existingUser.setFirstName(updatedUser.getFirstName());
+//        existingUser.setLastName(updatedUser.getLastName());
+//        existingUser.setRole(updatedUser.getRole());
+//        existingUser.setStatus(updatedUser.getStatus());
+//        existingUser.setUserDeletedStatus(updatedUser.isUserDeletedStatus());
+//
+//        return userRepository.save(existingUser);
+//
+//    }
+//
+//    // Delete User
+//    public void softDeleteUser(Long id) {
+//        UserResponseDTO user = this.getUserById(id);
+//        user.setStatus(UserResponseDTO.Status.INACTIVE);
+//        user.setUserDeletedStatus(true);
+//        userRepository.save(user);
+//    }
 
-        return userRepository.findUsersNotDeleted();
-
-    }
-
-    // Get user by Id
-    public UserEntity getUserById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found."));
-
-    }
-
-    // Update user
-    public UserEntity updateUser(Long id, UserDTO updatedUser) {
-
-
-        UserEntity existingUser = this.getUserById(id);
-
-        existingUser.setFirstName(updatedUser.getFirstName());
-        existingUser.setLastName(updatedUser.getLastName());
-        existingUser.setRole(updatedUser.getRole());
-        existingUser.setStatus(updatedUser.getStatus());
-        existingUser.setUserDeletedStatus(updatedUser.isUserDeletedStatus());
-
-        return userRepository.save(existingUser);
-
-    }
-
-    // Delete User
-    public void softDeleteUser(Long id) {
-        UserEntity user = this.getUserById(id);
-        user.setStatus(UserEntity.Status.INACTIVE);
-        user.setUserDeletedStatus(true);
-        userRepository.save(user);
-    }
 
 }

@@ -1,6 +1,7 @@
 package com.un4cus.backend.controller;
 
-import com.un4cus.backend.dto.UserDTO;
+import com.un4cus.backend.dto.UserRequestDTO;
+import com.un4cus.backend.dto.UserResponseDTO;
 import com.un4cus.backend.entity.UserEntity;
 import com.un4cus.backend.service.UserService;
 import jakarta.persistence.EntityExistsException;
@@ -23,7 +24,7 @@ public class UserController {
 
     // Create User
     @PostMapping("/user")
-    public ResponseEntity<UserEntity> createUser(@Valid @RequestBody UserEntity user) {
+    public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserRequestDTO user) {
         try {
             return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
         }
@@ -32,43 +33,43 @@ public class UserController {
         }
     }
 
-    // Get All Users
-    @GetMapping("/users")
-    public ResponseEntity<List<UserEntity>> getUsers() {
-        return new ResponseEntity<> (
-                userService.getAllUsers(), HttpStatus.OK
-        );
-    }
-
-    // Get user by Id
-    @GetMapping("/user/{id}")
-    public ResponseEntity<UserEntity> getUser(@PathVariable Long id) {
-
-        try{
-            return new ResponseEntity<> (userService.getUserById(id), HttpStatus.OK);
-        } catch (EntityNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-    }
-
-    // Update user
-    @PutMapping("/user/{id}")
-    public ResponseEntity<UserEntity> updateUser(@PathVariable Long id, @Valid @RequestBody UserDTO user) {
-        try{
-            UserEntity updatedUser = userService.updateUser(id, user);
-            return new ResponseEntity<> (updatedUser, HttpStatus.ACCEPTED);
-        }catch (EntityNotFoundException e){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-    }
-
-    // Delete User
-    @DeleteMapping("/user/{id}")
-    public ResponseEntity<Void> softDeleteUser(@PathVariable Long id) {
-        userService.softDeleteUser(id);
-        return new ResponseEntity<> (HttpStatus.OK);
-    }
+//    // Get All Users
+//    @GetMapping("/users")
+//    public ResponseEntity<List<UserResponseDTO>> getUsers() {
+//        return new ResponseEntity<> (
+//                userService.getAllUsers(), HttpStatus.OK
+//        );
+//    }
+//
+//    // Get user by Id
+//    @GetMapping("/user/{id}")
+//    public ResponseEntity<UserResponseDTO> getUser(@PathVariable Long id) {
+//
+//        try{
+//            return new ResponseEntity<> (userService.getUserById(id), HttpStatus.OK);
+//        } catch (EntityNotFoundException e) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//
+//    }
+//
+//    // Update user
+//    @PutMapping("/user/{id}")
+//    public ResponseEntity<UserEntity> updateUser(@PathVariable Long id, @Valid @RequestBody UserDTO user) {
+//        try{
+//            UserEntity updatedUser = userService.updateUser(id, user);
+//            return new ResponseEntity<> (updatedUser, HttpStatus.ACCEPTED);
+//        }catch (EntityNotFoundException e){
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//
+//    }
+//
+//    // Delete User
+//    @DeleteMapping("/user/{id}")
+//    public ResponseEntity<Void> softDeleteUser(@PathVariable Long id) {
+//        userService.softDeleteUser(id);
+//        return new ResponseEntity<> (HttpStatus.OK);
+//    }
 }
 

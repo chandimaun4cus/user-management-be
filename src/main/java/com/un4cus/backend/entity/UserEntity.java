@@ -1,5 +1,7 @@
 package com.un4cus.backend.entity;
 
+import com.un4cus.backend.enums.Role;
+import com.un4cus.backend.enums.Status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -15,7 +17,7 @@ import java.time.LocalDateTime;
 public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
@@ -60,14 +62,6 @@ public class UserEntity {
     @PrePersist
     protected void onCreate() {
         this.createdDate = LocalDateTime.now();
-    }
-
-    public enum Role {
-        ADMIN, USER, GUEST
-    }
-
-    public enum Status {
-        ACTIVE, INACTIVE
     }
 
 }
