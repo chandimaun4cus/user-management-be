@@ -2,6 +2,7 @@ package com.un4cus.backend.controller;
 
 import com.un4cus.backend.dto.UserRequestDTO;
 import com.un4cus.backend.dto.UserResponseDTO;
+import com.un4cus.backend.dto.UserUpdateDTO;
 import com.un4cus.backend.entity.UserEntity;
 import com.un4cus.backend.service.UserService;
 import jakarta.persistence.EntityExistsException;
@@ -52,18 +53,18 @@ public class UserController {
         }
 
     }
-//
-//    // Update user
-//    @PutMapping("/user/{id}")
-//    public ResponseEntity<UserEntity> updateUser(@PathVariable Long id, @Valid @RequestBody UserDTO user) {
-//        try{
-//            UserEntity updatedUser = userService.updateUser(id, user);
-//            return new ResponseEntity<> (updatedUser, HttpStatus.ACCEPTED);
-//        }catch (EntityNotFoundException e){
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//
-//    }
+
+    // Update user
+    @PutMapping("/user/{id}")
+    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO user) {
+        try{
+            UserResponseDTO updatedUser = userService.updateUser(id, user);
+            return new ResponseEntity<>(updatedUser, HttpStatus.ACCEPTED);
+        }catch (EntityNotFoundException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+    }
 //
 //    // Delete User
 //    @DeleteMapping("/user/{id}")

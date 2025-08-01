@@ -2,6 +2,7 @@ package com.un4cus.backend.service;
 
 import com.un4cus.backend.dto.UserRequestDTO;
 import com.un4cus.backend.dto.UserResponseDTO;
+import com.un4cus.backend.dto.UserUpdateDTO;
 import com.un4cus.backend.entity.UserEntity;
 import com.un4cus.backend.repository.UserRepository;
 import com.un4cus.backend.transformers.UserDtoTransformer;
@@ -54,22 +55,22 @@ public class UserService {
 
     }
 
-//    // Update user
-//    public UserRequestDTO updateUser(Long id, UserRequestDTO updatedUser) {
-//
-//
-//        UserResponseDTO existingUser = this.getUserById(id);
-//
-//
-//        existingUser.setFirstName(updatedUser.getFirstName());
-//        existingUser.setLastName(updatedUser.getLastName());
-//        existingUser.setRole(updatedUser.getRole());
-//        existingUser.setStatus(updatedUser.getStatus());
-//        existingUser.setUserDeletedStatus(updatedUser.isUserDeletedStatus());
-//
-//        return userRepository.save(existingUser);
-//
-//    }
+    // Update user
+    public UserResponseDTO updateUser(Long id, UserUpdateDTO updatedUser) {
+
+        UserEntity existingUser =userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found."));
+
+        existingUser.setFirstName(updatedUser.getFirstName());
+        existingUser.setLastName(updatedUser.getLastName());
+        existingUser.setRole(updatedUser.getRole());
+        existingUser.setStatus(updatedUser.getStatus());
+        existingUser.setUserDeletedStatus(updatedUser.isUserDeletedStatus());
+
+        UserEntity updateUser = userRepository.save(existingUser);
+
+        return userDtoTransformer.mapToResponseDTO(updateUser);
+
+    }
 //
 //    // Delete User
 //    public void softDeleteUser(Long id) {
