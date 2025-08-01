@@ -40,18 +40,18 @@ public class UserController {
                 userService.getAllUsers(), HttpStatus.OK
         );
     }
-//
-//    // Get user by Id
-//    @GetMapping("/user/{id}")
-//    public ResponseEntity<UserResponseDTO> getUser(@PathVariable Long id) {
-//
-//        try{
-//            return new ResponseEntity<> (userService.getUserById(id), HttpStatus.OK);
-//        } catch (EntityNotFoundException e) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//
-//    }
+
+    // Get user by Id
+    @GetMapping("/user/{id}")
+    public ResponseEntity<UserResponseDTO> getUser(@PathVariable Long id) {
+
+        try{
+            return new ResponseEntity<> (userService.getUserById(id), HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+    }
 //
 //    // Update user
 //    @PutMapping("/user/{id}")

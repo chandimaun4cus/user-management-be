@@ -45,13 +45,15 @@ public class UserService {
                 .map(userDtoTransformer::mapToResponseDTO)
                 .collect(Collectors.toList());
     }
-//
-//    // Get user by Id
-//    public UserResponseDTO getUserById(Long id) {
-//        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found."));
-//
-//    }
-//
+
+    // Get user by Id
+    public UserResponseDTO getUserById(Long id) {
+
+        UserEntity user =userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found."));
+        return userDtoTransformer.mapToResponseDTO(user);
+
+    }
+
 //    // Update user
 //    public UserRequestDTO updateUser(Long id, UserRequestDTO updatedUser) {
 //
