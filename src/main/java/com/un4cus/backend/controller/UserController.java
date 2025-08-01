@@ -33,13 +33,13 @@ public class UserController {
         }
     }
 
-//    // Get All Users
-//    @GetMapping("/users")
-//    public ResponseEntity<List<UserResponseDTO>> getUsers() {
-//        return new ResponseEntity<> (
-//                userService.getAllUsers(), HttpStatus.OK
-//        );
-//    }
+    // Get All Users
+    @GetMapping("/users")
+    public ResponseEntity<List<UserResponseDTO>> getUsers() {
+        return new ResponseEntity<> (
+                userService.getAllUsers(), HttpStatus.OK
+        );
+    }
 //
 //    // Get user by Id
 //    @GetMapping("/user/{id}")

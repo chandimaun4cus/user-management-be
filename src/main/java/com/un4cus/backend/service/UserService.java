@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -36,12 +37,14 @@ public class UserService {
         return userDtoTransformer.mapToResponseDTO(savedUser);
     }
 
-//    // Get All Users
-//    public List<UserResponseDTO> getAllUsers() {
-//
-//        return userRepository.findUsersNotDeleted();
-//
-//    }
+    // Get All Users
+    public List<UserResponseDTO> getAllUsers() {
+
+        return userRepository.findUsersNotDeleted()
+                .stream()
+                .map(userDtoTransformer::mapToResponseDTO)
+                .collect(Collectors.toList());
+    }
 //
 //    // Get user by Id
 //    public UserResponseDTO getUserById(Long id) {
